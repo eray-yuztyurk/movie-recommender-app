@@ -3,6 +3,7 @@ Gradio UI for Movie Recommendation System
 Clean interface definition - business logic in handlers.py
 """
 import gradio as gr
+from src.utils.constants import MAX_SIMILAR_MOVIES_TO_SHOW
 from src.ui.handlers import (
     initialize_system,
     search_movies,
@@ -136,9 +137,9 @@ User-based recommendations are more personal and can introduce you to unexpected
                 gr.Markdown("<div style='background: linear-gradient(90deg, #10b981 0%, transparent 100%); height: 3px; margin: 25px 0 15px 0;'></div>")
                 gr.Markdown("<h3 style='margin: 10px 0;'>📍 Step 2: Rate similar movies (click a star to instantly add to profile)</h3>")
                 
-                # Similar movie slots (3 movies)
+                # Similar movie slots (dynamic based on MAX_SIMILAR_MOVIES_TO_SHOW)
                 similar_movies = []
-                for i in range(3):
+                for i in range(MAX_SIMILAR_MOVIES_TO_SHOW):
                     with gr.Row(visible=False, elem_classes="movie-rating-row") as movie_row:
                         movie_info = gr.HTML("", elem_classes="movie-title-text")
                         btn1 = gr.Button("⭐", size="sm", elem_classes="rating-btn")
@@ -168,7 +169,7 @@ User-based recommendations are more personal and can introduce you to unexpected
                 personalized_output = gr.Dataframe(label="Your Personalized Recommendations", interactive=False)
                 
                 # Hidden state to store similar movie IDs
-                similar_ids = [gr.State(None) for _ in range(3)]
+                similar_ids = [gr.State(None) for _ in range(MAX_SIMILAR_MOVIES_TO_SHOW)]
                 
                 # Collect all outputs for similar movies display
                 similar_outputs = [profile_output, profile_warning]

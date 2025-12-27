@@ -27,7 +27,7 @@ MAX_SEARCH_RESULTS = 20
 MIN_SIMILARITY_THRESHOLD = 20
 
 # Number of similar movies to show in user-based flow
-MAX_SIMILAR_MOVIES_TO_SHOW = 3
+MAX_SIMILAR_MOVIES_TO_SHOW = 5
 
 # Minimum number of rated movies required for personalized recommendations
 MIN_RATED_MOVIES_FOR_RECOMMENDATIONS = 5
