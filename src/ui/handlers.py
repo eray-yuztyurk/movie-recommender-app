@@ -47,6 +47,7 @@ def initialize_system(progress=gr.Progress()):
     if dumps_exist():
         try:
             progress(0, desc="📦 Loading from cache...")
+            gr.Info("📦 Loading from cache...")
             state.df, state.reduced_df, state.user_item_matrix = load_dumps()
             gr.Info("✅ System loaded successfully from cache!")
             return gr.Button(value="✅ System Ready", interactive=False)
@@ -56,12 +57,15 @@ def initialize_system(progress=gr.Progress()):
     
     try:
         progress(0, desc="⏳ Initializing...")
+        gr.Info("⏳ Starting data initialization...")
         
         progress(PROGRESS_STEPS["loading_dataset"], desc="📂 Loading dataset...")
+        gr.Info("📂 Loading dataset...")
         state.df = load_dataset()
         state.df.columns = ["user_id", "item_id", "rating", "timestamp", "item_name", "genres"]
         
         progress(PROGRESS_STEPS["filtering_data"], desc="🔍 Filtering data...")
+        gr.Info("🔍 Filtering data...")
         state.reduced_df = dataframe_reduction(
             state.df, 
             user_col="user_id", 
@@ -71,6 +75,7 @@ def initialize_system(progress=gr.Progress()):
         )
         
         progress(PROGRESS_STEPS["creating_matrix"], desc="🔢 Creating matrix...")
+        gr.Info("🔢 Creating user-item matrix...")
         state.user_item_matrix = create_user_item_matrix(
             state.reduced_df,
             index_col="user_id",
@@ -79,9 +84,11 @@ def initialize_system(progress=gr.Progress()):
         )
         
         progress(PROGRESS_STEPS["saving_cache"], desc="💾 Saving to cache...")
+        gr.Info("💾 Saving processed data to cache...")
         save_dumps(state.df, state.reduced_df, state.user_item_matrix)
         
         progress(PROGRESS_STEPS["complete"], desc="✅ Complete!")
+        gr.Info("✅ Initialization complete!")
         return gr.Button(
             value=f"✅ Ready! {state.user_item_matrix.shape[0]} users, {state.user_item_matrix.shape[1]} movies",
             interactive=False

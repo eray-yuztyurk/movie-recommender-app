@@ -7,10 +7,10 @@ All magic numbers, thresholds, and configuration values are defined here.
 # DATA FILTERING THRESHOLDS
 # ===========================
 # Minimum number of ratings a user must have to be included
-USER_RATING_THRESHOLD = 150
+USER_RATING_THRESHOLD = 50
 
 # Minimum number of ratings a movie must have to be included  
-ITEM_RATED_THRESHOLD = 5000
+ITEM_RATED_THRESHOLD = 1000
 
 
 # ===========================
